@@ -40,7 +40,11 @@ The project is organized into modular directories to separate source code, raw d
 │   │   └── source_d_nyt_recent_raw.json          # NYT Search: Recent Data (3-Day Batch Sampling)
 │   │
 │   └── processed/                           # Final Data generated via `clean_data.py`
-│       └── final_dataset.csv                     # Unified Time-Series Dataset (Master File)
+│   │   ├── clean_cpi.csv                    # CPI metrics (Food, Energy, Shelter)
+│   │   ├── clean_energy.csv                 # Energy metrics (Gas, Diesel, Oil)
+│   │   ├── clean_unemployment.csv           # Unemployment metrics (Total, Men, Women)
+│   │   ├── clean_news_sentiment.csv         # News sentiment metrics (Counting of pre-defined keywords)
+│       └── final_dataset.csv                # Unified Time-Series Dataset (Master File)
 │
 ├── results/
 │   ├── visualization.ipynb  # Main Jupyter Notebook for generating plots
