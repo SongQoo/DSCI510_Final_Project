@@ -7,6 +7,17 @@ As described in the final report, this study integrates multi-source data to vis
 
 ---
 
+## **0. Name & Team Members**
+
+
+---
+
+1.  **Name:** Junhyeon Song
+2.  **USC Email:** songjunh@usc.edu
+3.  **USC ID:** 8467-4177-80
+4.  **GitHub Repository:** https://github.com/SongQoo/DSCI510_Final_Project
+---
+
 ## **1. Installation**
 
 To set up the environment for this project, please follow these steps:
