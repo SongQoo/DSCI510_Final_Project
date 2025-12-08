@@ -111,32 +111,6 @@ def plot_analysis2_supply_chain(df: pd.DataFrame) -> plt.Figure:
     ax2.legend(loc='upper right')
     return fig
 
-# ==========================================
-# [Analysis 3] Labor Market Analysis (Updated)
-# ==========================================
-# def plot_analysis3_labor_tradeoff(df: pd.DataFrame) -> plt.Figure:
-#     """
-#     [Analysis 3-1] Inflation vs Unemployment Trade-off.
-#     (Formerly Analysis 7 / Phillips Curve)
-#     """
-#     fig, ax = plt.subplots()
-#     ax.set_title("Analysis 3-1: Labor Market Trade-off (Inflation vs. Unemployment)", fontsize=16, fontweight='bold')
-    
-#     if 'Unemp_Total' in df.columns and 'CPI_Total_YoY' in df.columns:
-#         sns.scatterplot(data=df, x='Unemp_Total', y='CPI_Total_YoY', hue=df.index.year, palette='coolwarm', s=100, ax=ax)
-#         sns.regplot(data=df, x='Unemp_Total', y='CPI_Total_YoY', scatter=False, ax=ax, color='black', line_kws={'linestyle':'--', 'label': 'Trend Line'})
-        
-#         corr = df['Unemp_Total'].corr(df['CPI_Total_YoY'])
-#         ax.text(0.05, 0.95, f'Correlation: {corr:.2f}\n(Negative Relationship)', 
-#                 transform=ax.transAxes, fontsize=12, verticalalignment='top',
-#                 bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="black", alpha=0.8))
-        
-#         ax.set_xlabel('Unemployment Rate (%)')
-#         ax.set_ylabel('CPI Inflation YoY (%)')
-#         ax.legend(title='Year')
-        
-#     return fig
-
 def plot_analysis3_labor_tradeoff(df: pd.DataFrame) -> plt.Figure:
     """
     [Analysis 3-1] Inflation vs Unemployment Trade-off (Split Regime).
