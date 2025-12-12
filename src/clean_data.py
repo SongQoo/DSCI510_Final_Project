@@ -8,7 +8,7 @@ import re
 # ==========================================
 # [Setup] Path Configuration & Constants
 # ==========================================
-# Set BASE_DIR for .py execution (Current file's parent of parent directory)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_DIR = os.path.join(BASE_DIR, 'data', 'raw')
 PROCESSED_DIR = os.path.join(BASE_DIR, 'data', 'processed')
@@ -61,7 +61,7 @@ def clean_cpi_data():
         series_id = series['seriesID']
         col_name = series_map.get(series_id, series_id)
         
-        # [Added] Add the number of data points in this series to the total count
+        # Add the number of data points in this series to the total count
         raw_total_count += len(series['data'])
         
         for item in series['data']:
@@ -233,7 +233,7 @@ def clean_labor_data():
     }
     
     combined_df = pd.DataFrame()
-    raw_total_count = 0  # [Added] Counter for raw data points
+    raw_total_count = 0  # Counter for raw data points
 
     for col_name, filename in files.items():
         file_path = os.path.join(RAW_DIR, filename)

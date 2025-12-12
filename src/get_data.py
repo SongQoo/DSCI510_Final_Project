@@ -118,8 +118,6 @@ def get_source_b_energy():
 def get_source_c_labor():
     """
     [Source C] BLS Data Viewer: Collect Unemployment Rates
-    - Fixed: Correctly identifies headers by looking only at the first row.
-    - Fixed: Handles row validation more robustly (ignores footnotes like '(p)').
     """
     print("\n[Source C] Scraping Detailed Labor Market Data (BLS HTML)...")
     
@@ -157,7 +155,7 @@ def get_source_c_labor():
             
             if target_table:
                 # 1. Parse Headers (Only from the first row)
-                # Use the first row we found above
+                # Use the first row found above
                 headers_row = target_table.find("tr")
                 headers_list = [c.get_text().strip() for c in headers_row.find_all(["th", "td"]) if c.get_text().strip()]
                 
@@ -169,11 +167,10 @@ def get_source_c_labor():
                     row_text = [cell.get_text().strip() for cell in cells]
                     
                     # Validate row:
-                    # - Must have data
                     # - First column must look like a year (start with 4 digits)
                     # - Length should be reasonably close to header length (allow small mismatch due to hidden cols)
                     if row_text and len(row_text) >= 12 and row_text[0][:4].isdigit():
-                        # Truncate or pad to match header length if necessary, or just take what we have
+                        # Truncate or pad to match header length if necessary, or just take what it has
                         # Usually BLS has Year + 12 Months + Annual (14 cols)
                         rows_data.append(row_text)
                 
@@ -207,7 +204,7 @@ def get_source_c_labor():
 def get_source_d_sentiment(api_key):
     """
     [Source D] NYT API: Collect Raw Text
-    - Uses Archive API (2016-Present).
+    - Uses Archive API (2016-2025.05).
     """
     print("\n[Source D] Fetching Public Sentiment Data (NYT API)...")
     
@@ -287,7 +284,7 @@ def get_source_d_sentiment(api_key):
         print(f"\n -> Saved {len(all_articles)} raw articles to: {save_path}")
 
 # ==========================================
-# [Source D - Extension] Recent Data (High Volume + Retry Logic)
+# [Source D - Extension] Recent Data
 # ==========================================
 def get_source_d_sentiment_recent(api_key, start_str="20250601", end_str="20251201"):
     """
@@ -328,8 +325,7 @@ def get_source_d_sentiment_recent(api_key, start_str="20250601", end_str="202512
                     'begin_date': d_start,
                     'end_date': d_end,
                     'page': page,
-                    'sort': 'relevance'
-                    # No 'q' or 'fq' filters to guarantee data retrieval
+                    'sort': 'relevance' # No 'q' or 'fq' filters to guarantee data retrieval
                 }
                 
                 try:

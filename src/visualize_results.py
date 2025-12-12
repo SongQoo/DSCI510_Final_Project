@@ -20,7 +20,7 @@ def plot_analysis1_dashboard(df: pd.DataFrame) -> plt.Figure:
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
     plt.suptitle("Analysis 1: Statistical Characteristics Overview", fontsize=20, fontweight='bold')
 
-    # (A) Volatility
+    # (A) Volatility (Flexible(Energy) vs Sticky(Shelter))
     if 'CPI_Energy_YoY' in df.columns and 'CPI_Shelter_YoY' in df.columns:
         sns.lineplot(data=df, x=df.index, y='CPI_Energy_YoY', ax=axes[0], color='tab:red', alpha=0.5, label='Energy (High Volatility)')
         sns.lineplot(data=df, x=df.index, y='CPI_Shelter_YoY', ax=axes[0], color='tab:blue', linewidth=3, label='Shelter (Sticky)')
@@ -28,7 +28,7 @@ def plot_analysis1_dashboard(df: pd.DataFrame) -> plt.Figure:
         axes[0].set_ylabel("YoY Inflation (%)")
         axes[0].legend()
 
-    # (B) Asymmetry
+    # (B) Asymmetry (Labor Gender)
     if 'Unemp_Men' in df.columns and 'Unemp_Women' in df.columns:
         sns.kdeplot(data=df, x='Unemp_Men', ax=axes[1], fill=True, color='tab:blue', label='Men', alpha=0.3)
         sns.kdeplot(data=df, x='Unemp_Women', ax=axes[1], fill=True, color='tab:pink', label='Women', alpha=0.3)
@@ -42,14 +42,12 @@ def plot_analysis1_dashboard(df: pd.DataFrame) -> plt.Figure:
                              xy=(max_women, 0.05), xytext=(max_women-5, 0.15),
                              arrowprops=dict(facecolor='black', shrink=0.05))
 
-    # (C) Reactivity
+    # (C) Reactivity (News Fear Bursts)
     if 'News_Total_Counting' in df.columns:
         sns.histplot(data=df, x='News_Total_Counting', ax=axes[2], bins=30, color='gray', kde=True)
         axes[2].set_title("(C) Reactivity: Media Fear 'Bursts'", fontsize=14, fontweight='bold')
         axes[2].set_xlabel("Monthly News Mention Count")
         axes[2].set_ylabel("Frequency (Months)")
-        axes[2].text(0.5, 0.8, "Positive Skew\n(Long Tail)", transform=axes[2].transAxes, 
-                     ha='center', color='red', fontweight='bold')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.95]) 
     return fig
@@ -71,9 +69,9 @@ def plot_analysis1_sticky_inflation(df: pd.DataFrame) -> plt.Figure:
     return fig
 
 def plot_analysis1_misery_index(df: pd.DataFrame) -> plt.Figure:
-    """[Analysis 1-3] Macro View: The Misery Index."""
+    """[Analysis 1-3] Macro View: The Misery Index.(CPI + Unemployment vs News Fear)"""
     fig, ax1 = plt.subplots()
-    ax1.set_title("Analysis 1-3: The Misery Index vs Public Fear", fontsize=16, fontweight='bold')
+    ax1.set_title("Analysis 1-3: The Enconomic Index(CPI+Unemployment) vs Public Fear(News)", fontsize=16, fontweight='bold')
     
     if 'Unemp_Total' in df.columns and 'CPI_Total_YoY' in df.columns:
         misery_index = df['Unemp_Total'] + df['CPI_Total_YoY']
@@ -89,9 +87,9 @@ def plot_analysis1_misery_index(df: pd.DataFrame) -> plt.Figure:
     fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.9))
     return fig
 
-# ==========================================
-# [Analysis 2] Supply Chain Impact
-# ==========================================
+# ===========================================================================
+# [Analysis 2] Supply Chain Impact (Energy(Diesel) - Inflation(Food Prices))
+# ===========================================================================
 def plot_analysis2_supply_chain(df: pd.DataFrame) -> plt.Figure:
     """[Analysis 2] Diesel Price vs Food CPI."""
     fig, ax1 = plt.subplots()
@@ -111,10 +109,13 @@ def plot_analysis2_supply_chain(df: pd.DataFrame) -> plt.Figure:
     ax2.legend(loc='upper right')
     return fig
 
+# ==============================================
+# [Analysis 3] Labor Market (Labor - Inflation)
+# ==============================================
 def plot_analysis3_labor_tradeoff(df: pd.DataFrame) -> plt.Figure:
     """
     [Analysis 3-1] Inflation vs Unemployment Trade-off (Split Regime).
-    Separates Pre-2020 and Post-2020 to reveal distinct Phillips Curve patterns.
+    Separates Pre-2020 and Post-2020 to reveal distinct patterns.
     """
     fig, ax = plt.subplots()
     ax.set_title("Analysis 3-1: Labor Market Trade-off", fontsize=16, fontweight='bold')
@@ -154,7 +155,6 @@ def plot_analysis3_labor_tradeoff(df: pd.DataFrame) -> plt.Figure:
 def plot_analysis3_gender_gap(df: pd.DataFrame) -> plt.Figure:
     """
     [Analysis 3-2] Gender Unemployment Asymmetry.
-    (Formerly Analysis 3)
     """
     fig, ax = plt.subplots()
     ax.set_title("Analysis 3-2: Gender Asymmetry in Labor Market", fontsize=16, fontweight='bold')
@@ -172,9 +172,9 @@ def plot_analysis3_gender_gap(df: pd.DataFrame) -> plt.Figure:
     ax.legend()
     return fig
 
-# ==========================================
-# [Analysis 4] Structural Change
-# ==========================================
+# =========================================================
+# [Analysis 4] Structural Change (Energy(Gas) - Inflation)
+# =========================================================
 def plot_analysis4_structural_change(df: pd.DataFrame) -> plt.Figure:
     """[Analysis 4] Structural Change: Rolling Correlation."""
     fig, ax = plt.subplots()
@@ -193,9 +193,9 @@ def plot_analysis4_structural_change(df: pd.DataFrame) -> plt.Figure:
         ax.legend()
     return fig
 
-# ==========================================
-# [Analysis 5] Economic Sensitivity
-# ==========================================
+# ============================================================
+# [Analysis 5] Economic Sensitivity (Energy(Oil) - Inflation)
+# ============================================================
 def plot_analysis5_sensitivity_scatter(df: pd.DataFrame) -> plt.Figure:
     """[Analysis 5] Economic Sensitivity: Scatter Plot."""
     fig, ax = plt.subplots()
@@ -209,9 +209,9 @@ def plot_analysis5_sensitivity_scatter(df: pd.DataFrame) -> plt.Figure:
         ax.set_ylabel('CPI Inflation YoY (%)')
     return fig
 
-# ==========================================
-# [Analysis 6] Causal Chain Verification
-# ==========================================
+# ==============================================================================
+# [Analysis 6] Causal Chain Verification (Energy -> Inflation -> Labor -> News)
+# ==============================================================================
 def plot_analysis6_causal_heatmap(df: pd.DataFrame) -> plt.Figure:
     """[Analysis 6-1] Causal Chain Heatmap."""
     fig, ax = plt.subplots(figsize=(10, 6))

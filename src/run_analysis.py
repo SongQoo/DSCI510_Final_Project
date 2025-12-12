@@ -3,9 +3,6 @@ import numpy as np
 import os
 from scipy import stats
 
-# ==========================================
-# [Setup] Path Configuration
-# ==========================================
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROCESSED_DIR = os.path.join(BASE_DIR, 'data', 'processed')
 
@@ -28,7 +25,7 @@ def load_data():
 # ==========================================
 def analyze_basic_stats(df):
     """
-    Generate descriptive statistics including advanced metrics (Skewness, CV).
+    Generate descriptive statistics including advanced metrics (Skewness, CV(Coefficient of Variation)).
     """
     print("\n" + "="*80)
     print("[1. Basic & Advanced Statistics] Comprehensive Overview")
@@ -61,9 +58,9 @@ def analyze_basic_stats(df):
     print(stats_df[display_cols].round(3))
     return stats_df
 
-# ==========================================
-# [Analysis 2] Sector Impact (Supply Chain)
-# ==========================================
+# ===================================================================================
+# [Analysis 2] Sector Impact (Supply Chain: Energy(Diesel) - Inflation(Food Prices))
+# ===================================================================================
 def analyze_supply_chain_impact(df):
     """
     Analyze correlation and lag effects between Diesel Prices and Food CPI.
@@ -86,12 +83,12 @@ def analyze_supply_chain_impact(df):
     else:
         print("Missing columns for Supply Chain Analysis.")
 
-# ==========================================
-# [Analysis 3] Labor Market
-# ==========================================
+# ==============================================
+# [Analysis 3] Labor Market (Labor - Inflation)
+# ==============================================
 def analyze_labor_market(df):
     """
-    Analyze the trade-off between Unemployment and Inflation (Phillips Curve).
+    Analyze the trade-off between Unemployment and Inflation.
     """
     print("\n" + "="*80)
     print("[3-1. Laber Market] Inflation vs Unemployment")
@@ -103,11 +100,11 @@ def analyze_labor_market(df):
         print(f"Correlation (Unemployment <-> Inflation): {corr:.4f}")
         
         if corr < -0.3:
-            print("-> Conclusion: Validates the Phillips Curve (Negative Trade-off).")
+            print("-> Conclusion: Validates Negative Trade-off.")
         else:
-            print("-> Conclusion: Weak or No Phillips Curve relationship observed.")
+            print("-> Conclusion: Weak or No relationship observed.")
     else:
-        print("Missing columns for Phillips Curve Analysis.")
+        print("Missing columns for Analysis.")
         
 def analyze_gender_gap(df):
     """
@@ -134,9 +131,9 @@ def analyze_gender_gap(df):
     else:
         print("Gender unemployment data missing.")
 
-# ==========================================
-# [Analysis 4] Structural Change
-# ==========================================
+# ====================================================
+# [Analysis 4] Structural Change (Energy(Gas) - Inflation)
+# ====================================================
 def analyze_structural_change(df):
     """
     Detect structural breaks in correlation (Pre vs Post COVID).
@@ -166,9 +163,9 @@ def analyze_structural_change(df):
     else:
         print("Insufficient data for structural change analysis.")
 
-# ==========================================
-# [Analysis 5] Economic Sensitivity
-# ==========================================
+# ===========================================================
+# [Analysis 5] Economic Sensitivity (Energy(Oil) - Inflation)
+# ===========================================================
 def analyze_sensitivity(df):
     """
     Perform linear regression to find sensitivity of Inflation to Oil Prices.
@@ -192,9 +189,9 @@ def analyze_sensitivity(df):
     else:
         print("Data missing for regression analysis.")
 
-# ==========================================
-# [Analysis 6] Causal Chain Verification
-# ==========================================
+# ===========================================================================
+# [Analysis 6] Causal Chain Verification (Energy -> Inflation -> Labor -> News)
+# ===========================================================================
 def analyze_causal_chain(df):
     """
     Verify the chain: Energy -> Inflation -> Labor -> News.
